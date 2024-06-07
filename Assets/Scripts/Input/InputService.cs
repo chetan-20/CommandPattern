@@ -48,7 +48,20 @@ namespace Command.Input
         public void OnTargetSelected(UnitController targetUnit)
         {
             SetInputState(InputState.EXECUTING_INPUT);
+            UnitCommand commandToProcess = CreateUnitCommand();
             GameService.Instance.PlayerService.PerformAction(selectedCommandType, targetUnit);
         }
+        private UnitCommand CreateUnitCommand()
+        {
+
+        }
+        private CommandData CreateCommandData(UnitController targetUnit) => new CommandData
+        {
+            GameService.Instance.PlayerService.ActiveUnitID,
+            targetUnit.UnitID,
+            GameService.Instance.PlayerService.ActivePlayerID,
+            targetUnit.Owner.PlayeriD
+        }
+
     }
 }
