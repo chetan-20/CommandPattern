@@ -48,20 +48,41 @@ namespace Command.Input
         public void OnTargetSelected(UnitController targetUnit)
         {
             SetInputState(InputState.EXECUTING_INPUT);
-            UnitCommand commandToProcess = CreateUnitCommand();
-            GameService.Instance.PlayerService.PerformAction(selectedCommandType, targetUnit);
+            UnitCommand commandToProcess = CreateUnitCommand(targetUnit);
+            GameService.Instance.ProcessUnitCommand(commandToProcess);
         }
-        private UnitCommand CreateUnitCommand()
+        private UnitCommand CreateUnitCommand(UnitController targetUnit)
         {
-
+            CommandData commandData = CreateCommandData(targetUnit);
+            switch (selectedCommandType)
+            {
+                case CommandType.Attack:
+                    return new AttackCommand(commandData);
+                case CommandType.AttackStance:
+                    return new AttackStanceCommand(commandData);
+                case CommandType.BerserkAttack:
+                    return new BerserkCommand(commandData);
+                case CommandType.Heal:
+                    return new HealCommand(commandData);
+                case CommandType.ThirdEye:
+                    return new ThirdEyeCommand(commandData);
+                case CommandType.Cleanse:
+                    return new CleanseCommand(commandData);
+                case CommandType.Meditate:
+                    return new MeditateCommand(commandData);
+                default:
+                    throw new System.Exception("Command not implemented");
+            }
         }
-        private CommandData CreateCommandData(UnitController targetUnit) => new CommandData
+        private CommandData CreateCommandData(UnitController targetUnit)
         {
-            GameService.Instance.PlayerService.ActiveUnitID,
-            targetUnit.UnitID,
-            GameService.Instance.PlayerService.ActivePlayerID,
-            targetUnit.Owner.PlayeriD
+            return new CommandData(
+                GameService.Instance.PlayerService.ActiveUnitID,
+                targetUnit.UnitID,
+                GameService.Instance.PlayerService.ActivePlayerID,
+                targetUnit.Owner.PlayerID);
         }
+        
 
     }
 }
