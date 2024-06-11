@@ -24,4 +24,9 @@ namespace Command.Replay
         }
        
     }
+    public enum ReplayState
+    {
+        Deactive,
+        Active
+    }
 }

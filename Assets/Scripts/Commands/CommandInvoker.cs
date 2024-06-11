@@ -1,4 +1,5 @@
 using Command.Main;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,19 @@ using UnityEngine;
 public class CommandInvoker 
 {
     private Stack<ICommand> commandRegistry = new Stack<ICommand>();
-   
+    public CommandInvoker () => SubscribeToEvents();
+
+    private void SubscribeToEvents()
+    {
+        GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
+    }
+
+    private void SetReplayStack()
+    {
+        GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
+        commandRegistry.Clear();
+    }
+
     private bool CommandBelongsToActivePlayer()
     {
         if((commandRegistry.Peek() as UnitCommand).commandData.actorPlayerID == GameService.Instance.PlayerService.ActivePlayerID)
