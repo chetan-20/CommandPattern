@@ -15,7 +15,7 @@ public class CommandInvoker
         }
         else return false;
     }
-    private bool registryEmpty() 
+    private bool RegistryEmpty() 
     {
         if (commandRegistry.Count == 0)
             return true;
@@ -30,7 +30,7 @@ public class CommandInvoker
     }
     public void Undo()
     {
-        if(!registryEmpty() && CommandBelongsToActivePlayer())
+        if(!RegistryEmpty() && CommandBelongsToActivePlayer())
         commandRegistry.Pop().Undo();
     }
 }
