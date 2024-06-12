@@ -7,6 +7,7 @@ namespace Command.Player
         SWORD_MASTER,
         HEALER,
         MAGE,
-        BERSERKER
+        BERSERKER,
+        Time_Bender
     }
 }

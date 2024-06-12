@@ -9,6 +9,9 @@ namespace Command.Actions
         Cleanse,
         Meditate,
         BerserkAttack,
-        ThirdEye
+        ThirdEye,
+        ChronoShield,
+        TemporalShift,
+        TimeRipple
     }
 }
